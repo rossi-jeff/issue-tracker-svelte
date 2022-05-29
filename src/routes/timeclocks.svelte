@@ -1,6 +1,8 @@
 <script>
   import {  onMount } from 'svelte';
   import { baseUrl } from '../lib';
+  import { TableTimeClock } from '../components/tables';
+  import IconButton, { Icon } from '@smui/icon-button'
 
   /**
 * @type {any[]}
@@ -20,12 +22,8 @@
 	<title>Issue Tracker in Svelte | Time Clocks</title>
 </svelte:head>
 
-{#each timeclocks as timeclock}
-	<div>
-    { timeclock.Start.Date } @
-    { timeclock.Start.Time }
-    to
-    { timeclock.End.Date } @
-    { timeclock.End.Time } 
-  </div>
-{/each}
+<IconButton href="/timeclocks/new" title="Add a New Time Clock">
+  <Icon class="material-icons">add_circle_outline</Icon>
+</IconButton>
+
+<TableTimeClock {timeclocks} />

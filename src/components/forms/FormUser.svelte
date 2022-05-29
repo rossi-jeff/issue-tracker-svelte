@@ -10,6 +10,10 @@
 	import Radio from '@smui/radio';
 	import Button, { Label } from '@smui/button';
 	export /**
+* @type {any}
+*/
+	 let showPass;
+	export /**
 	 * @type {any}
 	 */
 	let user;
@@ -57,6 +61,7 @@
 						<HelperText slot="helper">helper text</HelperText>
 					</Textfield>
 				</Cell>
+				{#if showPass}
 				<Cell>
 					<Textfield
 						style="width: 100%;"
@@ -68,6 +73,7 @@
 						<HelperText slot="helper">helper text</HelperText>
 					</Textfield>
 				</Cell>
+				{/if}
 			</LayoutGrid>
 		</Content>
 	</Panel>

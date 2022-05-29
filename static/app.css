@@ -1,0 +1,10 @@
+.ellipsis {
+  width: 18em;
+  max-width: 18em;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.ellipsis:hover {
+  white-space: normal;
+}
