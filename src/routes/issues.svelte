@@ -2,7 +2,8 @@
   import {  onMount } from 'svelte';
   import { baseUrl } from '../lib';
   import { CardIssue } from '../components/cards';
-  import IconButton, { Icon } from '@smui/icon-button';
+  import { FilterIssue } from '../components/filters';
+  import Card, { Content } from '@smui/card';
 
   /**
 * @type {any[]}
@@ -22,9 +23,11 @@
 	<title>Issue Tracker in Svelte | Issues</title>
 </svelte:head>
 
-<IconButton href="/issues/new" title="Add a New Issue">
-  <Icon class="material-icons">add_circle_outline</Icon>
-</IconButton>
+<Card style="z-index: 9999;">
+  <Content>
+    <FilterIssue />
+  </Content>
+</Card>
 
 {#each issues as issue}
   <CardIssue {issue} />
