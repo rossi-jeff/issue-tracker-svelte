@@ -18,7 +18,7 @@
 	 */
 	let issues = [];
 	export /**
-	 * @type {{ UserId: any; ProjectId: any; IssueId: any; Start: { Date: string | number | null | undefined; Time: string | number | null | undefined; }; End: { Date: string | number | null | undefined; Time: string | number | null | undefined; }; }}
+	 * @type {{ Issue?: { Id: any; }; IssueId: number; Project?: { Id: any; }; ProjectId: any; User?: { Id: any; }; UserId: any; Start: { Date: string | number | null | undefined; Time: string | number | null | undefined; }; End: { Date: string | number | null | undefined; Time: string | number | null | undefined; }; }}
 	 */
 	let timeclock;
 	onMount(async () => {
@@ -39,6 +39,17 @@
 			issues = await results.json();
 			filterIssues(0);
 		}
+		setTimeout(() => {
+			if (timeclock.Project && timeclock.Project.Id && !timeclock.ProjectId) {
+				timeclock.ProjectId = timeclock.Project.Id;
+			}
+			if (timeclock.User && timeclock.User.Id && !timeclock.UserId) {
+				timeclock.UserId = timeclock.User.Id;
+			}
+			if (timeclock.Issue && timeclock.Issue.Id && !timeclock.IssueId) {
+				timeclock.IssueId = timeclock.Issue.Id;
+			}
+		}, 100);
 	});
 	/**
 	 * @type {any[]}

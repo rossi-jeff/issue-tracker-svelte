@@ -7,7 +7,7 @@
   import IconButton, { Icon } from '@smui/icon-button';
 </script>
 
-<Card variant="outlined" padded class="z-1">
+<Card variant="outlined" padded>
   <Content>
     <h4>{issue.Title}</h4>
     <div>{issue.Details}</div>

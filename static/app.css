@@ -8,3 +8,7 @@
 .ellipsis:hover {
   white-space: normal;
 }
+body {
+  margin: 0;
+  padding: 0;
+}

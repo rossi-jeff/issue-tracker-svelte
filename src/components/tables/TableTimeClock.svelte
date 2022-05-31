@@ -83,8 +83,9 @@
 				<Option value={50}>50</Option>
 			</Select>
 		</svelte:fragment>
+
 		<svelte:fragment slot="total">
-			{start + 1}-{end} of {timeclocks.length}
+			{start + 1} to {end} of {timeclocks.length}
 		</svelte:fragment>
 
 		<IconButton
@@ -101,6 +102,7 @@
 			on:click={() => currentPage--}
 			disabled={currentPage === 0}>chevron_left</IconButton
 		>
+
 		<IconButton
 			class="material-icons"
 			action="next-page"
