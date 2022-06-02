@@ -80,9 +80,6 @@
 		const results = await fetch(url);
 		if (results.ok) {
 			users = await results.json();
-			if (users.length) {
-				console.log(users[0]);
-			}
 			pageCount = users.length ? Math.ceil(users.length / perPage) : 0;
 			let beginning = 0;
 			let ending = Math.min(users.length, beginning + perPage);

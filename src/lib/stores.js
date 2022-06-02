@@ -11,7 +11,6 @@ export const initialStores = {
   },
   flash: {
     visible: false,
-	  className: '',
 	  message: ''
   },
 }

@@ -1,9 +1,9 @@
 <script>
-	import { TopBar, NavDrawer, BreadCrumbs } from '../components/layout';
+	import { TopBar, NavDrawer, BreadCrumbs, SnackBar } from '../components/layout';
 	import { AutoAdjust } from '@smui/top-app-bar';
 	import { Scrim, AppContent } from '@smui/drawer';
 	import { DialogLogin } from '../components/dialogs';
-	import { baseUrl, buildHeaders, session, sessionKey, initialStores } from '../lib';
+	import { baseUrl, buildHeaders, session, sessionKey, initialStores, flash } from '../lib';
 
 	/**
 	 * @type {import("@smui/top-app-bar/src/TopAppBar.svelte").default}
@@ -22,6 +22,10 @@
 	let signOut = () => {
 		session.set(initialStores.session);
 		localStorage.removeItem(sessionKey);
+		flash.set({
+			visible: true,
+			message: 'Sign Out Successful'
+		});
 	};
 	let sendLogin = async (/** @type {{ Username: any; Password: any; }} */ payload) => {
 		open.login = false;
@@ -38,6 +42,10 @@
 			const success = await results.json();
 			success.signedIn = true;
 			session.set(success);
+			flash.set({
+				visible: true,
+				message: `Signed in as ${success.Name}`
+			});
 			localStorage.setItem(sessionKey, JSON.stringify(success));
 		} else {
 			console.log(results);
@@ -58,3 +66,4 @@
 	</AppContent>
 </AutoAdjust>
 <DialogLogin open={open.login} {sendLogin} {dialogClosed} />
+<SnackBar />
