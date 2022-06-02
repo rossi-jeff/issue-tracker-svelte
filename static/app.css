@@ -12,3 +12,12 @@ body {
   margin: 0;
   padding: 0;
 }
+.issue-card .mdc-layout-grid__cell strong {
+  margin-right: 1.5em;
+}
+strong.crumb-spacer {
+  margin: 0 1em 0 1em;
+}
+.bread-crumb-trail {
+  margin: 0.5em 0 1em 0;
+}

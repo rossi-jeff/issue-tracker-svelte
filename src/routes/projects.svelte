@@ -1,6 +1,6 @@
 <script>
 	import { onMount } from 'svelte';
-	import { baseUrl } from '../lib';
+	import { baseUrl, crumbs } from '../lib';
 	import { CardProject } from '../components/cards';
 	import IconButton, { Icon } from '@smui/icon-button';
 	import LayoutGrid, { Cell } from '@smui/layout-grid';
@@ -86,6 +86,9 @@
 			pageLabel = `${beginning + 1} to ${ending} of ${projects.length}`;
 		}
 	};
+
+	let trail = [{ text: 'Home', href: '/' }, { text: 'Projects' }];
+	crumbs.set(trail);
 
 	onMount(() => {
 		loadProjects();

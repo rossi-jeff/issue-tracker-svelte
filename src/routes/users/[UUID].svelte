@@ -3,6 +3,7 @@
 	import { DialogEmail, DialogPhone, DialogConfirm } from '../../components/dialogs';
 	import Card, { Content, Actions } from '@smui/card';
 	import Button, { Label } from '@smui/button';
+	import { FormatName, crumbs } from '../../lib';
 	export /**
 	 * @type {any}
 	 */
@@ -43,6 +44,13 @@
 	let clicked = () => {
 		console.log(user);
 	};
+
+	let trail = [
+		{ text: 'Home', href: '/' },
+		{ text: 'Users', href: '/users' },
+		{ text: FormatName(user.Name) }
+	];
+	crumbs.set(trail);
 </script>
 
 <Card>

@@ -1,7 +1,7 @@
 <script>
 	import { FormUser } from '../../components/forms';
 	import { v4 } from 'uuid';
-	import { clone } from '../../lib';
+	import { clone, crumbs } from '../../lib';
 	import { DialogEmail, DialogPhone, DialogConfirm } from '../../components/dialogs';
 	import Card, { Content, Actions } from '@smui/card';
 	import Button, { Label } from '@smui/button';
@@ -156,6 +156,13 @@
 	let clicked = () => {
 		console.log(user);
 	};
+
+	let trail = [
+		{ text: 'Home', href: '/' },
+		{ text: 'Users', href: '/users' },
+		{ text: 'New User' }
+	];
+	crumbs.set(trail);
 </script>
 
 <Card>

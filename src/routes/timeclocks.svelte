@@ -1,6 +1,6 @@
 <script>
 	import { onMount } from 'svelte';
-	import { baseUrl } from '../lib';
+	import { baseUrl, crumbs } from '../lib';
 	import { TableTimeClock } from '../components/tables';
 	import IconButton, { Icon } from '@smui/icon-button';
 	import { FilterTimeClock } from '../components/filters';
@@ -13,6 +13,9 @@
 	let filterAction = (/** @type {any} */ params) => {
 		console.log('filterAction', params);
 	};
+
+	let trail = [{ text: 'Home', href: '/' }, { text: 'Time Clocks' }];
+	crumbs.set(trail);
 
 	onMount(async () => {
 		let url = `${baseUrl}/timeclock`;

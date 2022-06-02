@@ -1,6 +1,6 @@
 <script>
 	import { onMount } from 'svelte';
-	import { baseUrl } from '../lib';
+	import { baseUrl, crumbs } from '../lib';
 	import { CardUser } from '../components/cards';
 	import IconButton, { Icon } from '@smui/icon-button';
 	import LayoutGrid, { Cell } from '@smui/layout-grid';
@@ -61,35 +61,41 @@
 	const searchUsers = () => {
 		console.log('searchUsers', Term);
 		if (Term) {
-			searched = true
+			searched = true;
 			// actually need make back end changes
-		} 
-	}
+		}
+	};
 
 	const clearSearch = () => {
 		console.log('clearSearch');
-		Term = ''
+		Term = '';
 		if (searched) {
-			loadUsers()
-			searched = false
+			loadUsers();
+			searched = false;
 		}
-	}
+	};
 
 	const loadUsers = async () => {
 		let url = `${baseUrl}/user`;
 		const results = await fetch(url);
 		if (results.ok) {
 			users = await results.json();
+			if (users.length) {
+				console.log(users[0]);
+			}
 			pageCount = users.length ? Math.ceil(users.length / perPage) : 0;
 			let beginning = 0;
 			let ending = Math.min(users.length, beginning + perPage);
 			slice = users.slice(beginning, ending);
 			pageLabel = `${beginning + 1} to ${ending} of ${users.length}`;
 		}
-	}
+	};
+
+	let trail = [{ text: 'Home', href: '/' }, { text: 'Users' }];
+	crumbs.set(trail);
 
 	onMount(() => {
-		loadUsers()
+		loadUsers();
 	});
 </script>
 

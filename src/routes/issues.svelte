@@ -1,6 +1,6 @@
 <script>
 	import { onMount } from 'svelte';
-	import { baseUrl } from '../lib';
+	import { baseUrl, crumbs } from '../lib';
 	import { CardIssue } from '../components/cards';
 	import { FilterIssue } from '../components/filters';
 	import Card, { Content } from '@smui/card';
@@ -73,6 +73,9 @@
 		slice = issues.slice(beginning, ending);
 		pageLabel = `${beginning + 1} to ${ending} of ${issues.length}`;
 	};
+
+	let trail = [{ text: 'Home', href: '/' }, { text: 'Issues' }];
+	crumbs.set(trail);
 
 	onMount(async () => {
 		let url = `${baseUrl}/issue`;

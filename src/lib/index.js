@@ -1,4 +1,5 @@
 export { baseUrl } from './base-url';
+export { buildHeaders } from './build-headers';
 export { clone } from './clone';
 export { FormatAddress } from './format-address';
 export { FormatName } from './format-name';
@@ -12,3 +13,4 @@ export {
 	PhoneTypeArray,
 	RoleArray
 } from './options';
+export { initialStores, sessionKey, session, flash, crumbs } from './stores';

@@ -6,9 +6,9 @@
 	import { onMount } from 'svelte';
 	import { baseUrl, PriorityArray, StatusArray, IssueTypeArray, ComplexityArray } from '../../lib';
 	export /**
-	 * @type {{ Title: string; Details: string; ProjectId: number; AssignedToId: number; Priority: string; Status: string; Type: string; Complexity: string; Project?: { Id?: number; }; AssignedTo?: { Id?: number; } }}
-	 */
-	let issue;
+* @type {{ Project?: { Id?: any; }; ProjectId?: any; AssignedTo?: { Id?: any; }; AssignedToId?: any; Title?: string | number | null | undefined; Details?: string | number | null | undefined; Priority?: any; Status?: any; Type?: any; Complexity?: any; }}
+*/
+	 let issue;
 	/**
 	 * @type {any[]}
 	 */
