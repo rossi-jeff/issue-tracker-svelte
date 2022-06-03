@@ -146,7 +146,7 @@
 	</Cell>
 </LayoutGrid>
 
-{#each slice as project}
+{#each slice as project (project.Id)}
 	<CardProject {project} />
 {/each}
 

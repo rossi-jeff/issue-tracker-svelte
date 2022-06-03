@@ -30,15 +30,15 @@
 	let filter = clone(blank);
 
 	const filtersChanged = () => {
-    filterAction(clone(filter));
+		filterAction(clone(filter));
 	};
 
 	const clearFilters = () => {
-    filter = clone(blank);
-    filterAction(clone(filter));
-  };
+		filter = clone(blank);
+		filterAction(clone(filter));
+	};
 
-  export let filterAction = (/** @type {any} */ params) => {}
+	export let filterAction = (/** @type {any} */ params) => {};
 
 	onMount(async () => {
 		let url, results;

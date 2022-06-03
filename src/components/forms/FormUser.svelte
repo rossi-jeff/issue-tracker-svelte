@@ -10,9 +10,9 @@
 	import Radio from '@smui/radio';
 	import Button, { Label } from '@smui/button';
 	export /**
-* @type {any}
-*/
-	 let showPass;
+	 * @type {any}
+	 */
+	let showPass;
 	export /**
 	 * @type {any}
 	 */
@@ -62,17 +62,17 @@
 					</Textfield>
 				</Cell>
 				{#if showPass}
-				<Cell>
-					<Textfield
-						style="width: 100%;"
-						helperLine$style="width: 100%;"
-						bind:value={user.Credentials.Password}
-						label="Password"
-						type="password"
-					>
-						<HelperText slot="helper">helper text</HelperText>
-					</Textfield>
-				</Cell>
+					<Cell>
+						<Textfield
+							style="width: 100%;"
+							helperLine$style="width: 100%;"
+							bind:value={user.Credentials.Password}
+							label="Password"
+							type="password"
+						>
+							<HelperText slot="helper">helper text</HelperText>
+						</Textfield>
+					</Cell>
 				{/if}
 			</LayoutGrid>
 		</Content>

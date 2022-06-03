@@ -1,4 +1,6 @@
-export const FormatAddress = (/** @type {{ Address: string; Suite: any; City: any; State: any; Zip: any; }} */ address) => {
+export const FormatAddress = (
+	/** @type {{ Address: string; Suite: any; City: any; State: any; Zip: any; }} */ address
+) => {
 	let formatted = '';
 
 	if (address) {

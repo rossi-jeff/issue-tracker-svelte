@@ -2,9 +2,9 @@
 	import { FormIssue } from '../../components/forms';
 	import Card, { Content, Actions } from '@smui/card';
 	import Button, { Label } from '@smui/button';
-	import { crumbs } from '../../lib';
+	import { crumbs, baseUrl, buildHeaders, session, flash } from '../../lib';
 	export /**
-	 * @type {{ SequenceNumber?: any; Title?: string; Details?: string; ProjectId?: number; AssignedToId?: number; Priority?: string; Status?: string; Type?: string; Complexity?: string; Project?: { Id?: number | undefined; } | undefined; AssignedTo?: { Id?: number | undefined; } | undefined; }}
+	 * @type {{ SequenceNumber?: any; UUID?: any; Project?: { Id?: any; } | undefined; ProjectId?: any; AssignedTo?: { Id?: any; } | undefined; AssignedToId?: any; Title?: string | number | null | undefined; Details?: string | number | null | undefined; Priority?: any; Status?: any; Type?: any; Complexity?: any; }}
 	 */
 	let issue;
 
@@ -15,8 +15,32 @@
 	];
 	crumbs.set(trail);
 
-	const clicked = () => {
-		console.log(issue);
+	/**
+	 * @type {{ Token?: any; } | undefined}
+	 */
+	let currentUser;
+	session.subscribe((value) => {
+		currentUser = value;
+	});
+
+	const updateIssue = async () => {
+		const url = `${baseUrl}/issue/${issue.UUID}`;
+		const headers = buildHeaders(currentUser);
+		const results = await fetch(url, {
+			method: 'PATCH',
+			body: JSON.stringify(issue),
+			headers
+		});
+		if (results.ok) {
+			const updated = await results.json();
+			flash.set({
+				visible: true,
+				message: `Updated: ${updated.Title}`
+			});
+			window.location.href = '/issues';
+		} else {
+			console.log(results);
+		}
 	};
 </script>
 
@@ -25,9 +49,11 @@
 		<FormIssue {issue} />
 	</Content>
 	<Actions fullBleed>
-		<Button on:click={clicked}>
+		<Button on:click={updateIssue}>
 			<Label>Update Issue</Label>
 			<i class="material-icons" aria-hidden="true">save</i>
 		</Button>
 	</Actions>
 </Card>
+
+<div class="scroll-space" />

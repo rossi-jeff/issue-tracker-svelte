@@ -11,14 +11,14 @@
 		if (e.detail.action === 'login') {
 			sendLogin(payload);
 		}
-		dialogClosed()
+		dialogClosed();
 	};
 	const payload = {
 		Username: '',
 		Password: ''
 	};
 	export let sendLogin = (/** @type {any} */ payload) => {};
-  export let dialogClosed = () => {}
+	export let dialogClosed = () => {};
 </script>
 
 <Dialog bind:open on:SMUIDialog:closed={closeHandler} style="z-index: 999999">

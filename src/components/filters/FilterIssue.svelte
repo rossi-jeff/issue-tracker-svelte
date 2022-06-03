@@ -37,9 +37,9 @@
 	const searchIssues = () => {
 		console.log('searchIssues');
 		if (Term) {
-			searched = true
+			searched = true;
 		}
-	}
+	};
 
 	const clearSearch = () => {
 		console.log('clearSearch');
@@ -78,21 +78,21 @@
 	};
 	export let filterAction = (/** @type {any} */ params) => {};
 	export /**
-* @type {number}
-*/
-	 let currentPage
+	 * @type {number}
+	 */
+	let currentPage;
 	export /**
-* @type {number}
-*/
-	 let pageCount
+	 * @type {number}
+	 */
+	let pageCount;
 	export /**
-* @type {any}
-*/
-	 let pageLabel
-	export let firstPage = () => {}
-	export let prevPage = () => {}
-	export let nextPage = () => {}
-	export let lastPage = () => {}
+	 * @type {any}
+	 */
+	let pageLabel;
+	export let firstPage = () => {};
+	export let prevPage = () => {};
+	export let nextPage = () => {};
+	export let lastPage = () => {};
 </script>
 
 <LayoutGrid>

@@ -1,19 +1,19 @@
 import { writable } from 'svelte/store';
 
 export const initialStores = {
-  session: {
-    signedIn: false,
-    Name: '',
-    UserName: '',
-    Token: '',
-    UUID: '',
-    SessionId: ''
-  },
-  flash: {
-    visible: false,
-	  message: ''
-  },
-}
+	session: {
+		signedIn: false,
+		Name: '',
+		UserName: '',
+		Token: '',
+		UUID: '',
+		SessionId: ''
+	},
+	flash: {
+		visible: false,
+		message: ''
+	}
+};
 
 /** @type {{ text: string; href?: string; }[]} */
 let trail = [];

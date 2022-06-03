@@ -1,23 +1,26 @@
 .ellipsis {
-  width: 18em;
-  max-width: 18em;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
+	width: 18em;
+	max-width: 18em;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
 }
 .ellipsis:hover {
-  white-space: normal;
+	white-space: normal;
 }
 body {
-  margin: 0;
-  padding: 0;
+	margin: 0;
+	padding: 0;
 }
 .issue-card .mdc-layout-grid__cell strong {
-  margin-right: 1.5em;
+	margin-right: 1.5em;
 }
 strong.crumb-spacer {
-  margin: 0 1em 0 1em;
+	margin: 0 1em 0 1em;
 }
 .bread-crumb-trail {
-  margin: 0.5em 0 1em 0;
+	margin: 0.5em 0 1em 0;
+}
+.scroll-space {
+	height: 20em;
 }

@@ -111,7 +111,7 @@
 	</Content>
 </Card>
 
-{#each slice as issue}
+{#each slice as issue (issue.Id)}
 	<CardIssue {issue} />
 {/each}
 

@@ -10,7 +10,7 @@
 	 * @type {import("@smui/snackbar").SnackbarComponentDev}
 	 */
 	let snackbar;
-  flash.subscribe((value) => {
+	flash.subscribe((value) => {
 		snack = value;
 		if (snackbar && snack.visible) {
 			snackbar.open();

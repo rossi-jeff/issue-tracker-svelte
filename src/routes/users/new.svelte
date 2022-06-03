@@ -1,10 +1,11 @@
 <script>
 	import { FormUser } from '../../components/forms';
 	import { v4 } from 'uuid';
-	import { clone, crumbs } from '../../lib';
+	import { clone, crumbs, baseUrl, buildHeaders, session, flash, FormatName } from '../../lib';
 	import { DialogEmail, DialogPhone, DialogConfirm } from '../../components/dialogs';
 	import Card, { Content, Actions } from '@smui/card';
 	import Button, { Label } from '@smui/button';
+	import { updated } from '$app/stores';
 	let user = {
 		Credentials: {
 			Username: '',
@@ -153,9 +154,63 @@
 			}
 		}
 	};
-	let clicked = () => {
-		console.log(user);
+	const saveUser = async () => {
+		const { Emails, Phones } = user;
+		// @ts-ignore
+		delete user.Emails;
+		// @ts-ignore
+		delete user.Phones;
+		const headers = buildHeaders(currentUser);
+		let url = `${baseUrl}/user`;
+		let response = await fetch(url, {
+			method: 'POST',
+			body: JSON.stringify(user),
+			headers
+		});
+		if (response.ok) {
+			const saved = await response.json();
+			console.log(saved);
+			if (Emails.length) {
+				url = `${baseUrl}/user/${saved.UUID}/email`;
+				for (let email of Emails) {
+					// @ts-ignore
+					email.UserId = saved.Id;
+					response = await fetch(url, {
+						method: 'POST',
+						body: JSON.stringify(email),
+						headers
+					});
+					if (response.ok) console.log(await response.json());
+				}
+			}
+			if (Phones.length) {
+				url = `${baseUrl}/user/${saved.UUID}/phone`;
+				for (let phone of Phones) {
+					// @ts-ignore
+					phone.UserId = saved.Id;
+					response = await fetch(url, {
+						method: 'POST',
+						body: JSON.stringify(phone),
+						headers
+					});
+					if (response.ok) console.log(await response.json());
+				}
+			}
+			flash.set({
+				visible: true,
+				message: `Saved: ${FormatName(saved.Name)}`
+			});
+			window.location.href = '/users';
+		}
 	};
+
+	/**
+	 * @type {{ Token?: any; } | undefined}
+	 */
+	let currentUser;
+	session.subscribe((value) => {
+		currentUser = value;
+	});
 
 	let trail = [
 		{ text: 'Home', href: '/' },
@@ -179,12 +234,14 @@
 		/>
 	</Content>
 	<Actions fullBleed>
-		<Button on:click={clicked}>
+		<Button on:click={saveUser}>
 			<Label>Save User</Label>
 			<i class="material-icons" aria-hidden="true">save</i>
 		</Button>
 	</Actions>
 </Card>
+
+<div class="scroll-space" />
 
 <DialogConfirm
 	title={confirmation.title}

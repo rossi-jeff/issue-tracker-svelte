@@ -1,10 +1,7 @@
-export const FormatName = (/** @type {{ Salutation: any; First: any; Middle: any; Last: any; Suffix: string; }} */ name) => {
+export const FormatName = (/** @type {{ First: any; Middle: any; Last: any; }} */ name) => {
 	let formatted = '';
 
 	if (name) {
-		if (name.Salutation) {
-			formatted += `${name.Salutation} `;
-		}
 		if (name.First) {
 			formatted += `${name.First} `;
 		}
@@ -13,9 +10,6 @@ export const FormatName = (/** @type {{ Salutation: any; First: any; Middle: any
 		}
 		if (name.Last) {
 			formatted += `${name.Last} `;
-		}
-		if (name.Suffix) {
-			formatted += name.Suffix;
 		}
 	}
 

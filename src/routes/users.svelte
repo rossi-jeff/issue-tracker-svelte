@@ -147,7 +147,7 @@
 	</Cell>
 </LayoutGrid>
 
-{#each slice as user}
+{#each slice as user (user.Id)}
 	<CardUser {user} />
 {/each}
 
