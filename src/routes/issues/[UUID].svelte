@@ -2,7 +2,7 @@
 	import { FormIssue } from '../../components/forms';
 	import Card, { Content, Actions } from '@smui/card';
 	import Button, { Label } from '@smui/button';
-	import { crumbs, baseUrl, buildHeaders, session, flash } from '../../lib';
+	import { crumbs, baseUrl, buildHeaders, session, flash, progress } from '../../lib';
 	export /**
 	 * @type {{ SequenceNumber?: any; UUID?: any; Project?: { Id?: any; } | undefined; ProjectId?: any; AssignedTo?: { Id?: any; } | undefined; AssignedToId?: any; Title?: string | number | null | undefined; Details?: string | number | null | undefined; Priority?: any; Status?: any; Type?: any; Complexity?: any; }}
 	 */
@@ -24,6 +24,7 @@
 	});
 
 	const updateIssue = async () => {
+		progress.set(true); // navigation will close
 		const url = `${baseUrl}/issue/${issue.UUID}`;
 		const headers = buildHeaders(currentUser);
 		const results = await fetch(url, {

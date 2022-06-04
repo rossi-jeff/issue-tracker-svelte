@@ -1,6 +1,6 @@
 <script>
 	import { onMount } from 'svelte';
-	import { baseUrl, crumbs } from '../lib';
+	import { baseUrl, crumbs, progress } from '../lib';
 	import { CardIssue } from '../components/cards';
 	import { FilterIssue } from '../components/filters';
 	import Card, { Content } from '@smui/card';
@@ -21,6 +21,7 @@
 	let perPage = 10;
 
 	const filterAction = async (/** @type {any} */ params) => {
+		progress.set(true);
 		const url = new URL(`${baseUrl}/issue`);
 		for (const key in params) {
 			if (params[key]) {
@@ -35,6 +36,7 @@
 			let ending = Math.min(issues.length, beginning + perPage);
 			slice = issues.slice(beginning, ending);
 			pageLabel = `${beginning + 1} to ${ending} of ${issues.length}`;
+			progress.set(false);
 		}
 	};
 
@@ -78,6 +80,7 @@
 	crumbs.set(trail);
 
 	onMount(async () => {
+		progress.set(true);
 		let url = `${baseUrl}/issue`;
 		const results = await fetch(url);
 		if (results.ok) {
@@ -88,6 +91,7 @@
 			let ending = Math.min(issues.length, beginning + perPage);
 			slice = issues.slice(beginning, ending);
 			pageLabel = `${beginning + 1} to ${ending} of ${issues.length}`;
+			progress.set(false);
 		}
 	});
 </script>

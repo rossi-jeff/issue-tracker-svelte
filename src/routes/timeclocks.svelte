@@ -1,6 +1,6 @@
 <script>
 	import { onMount } from 'svelte';
-	import { baseUrl, crumbs } from '../lib';
+	import { baseUrl, crumbs, progress } from '../lib';
 	import { TableTimeClock } from '../components/tables';
 	import IconButton, { Icon } from '@smui/icon-button';
 	import { FilterTimeClock } from '../components/filters';
@@ -18,10 +18,12 @@
 	crumbs.set(trail);
 
 	onMount(async () => {
+		progress.set(true);
 		let url = `${baseUrl}/timeclock`;
 		const results = await fetch(url);
 		if (results.ok) {
 			timeclocks = await results.json();
+			progress.set(false);
 		}
 	});
 </script>

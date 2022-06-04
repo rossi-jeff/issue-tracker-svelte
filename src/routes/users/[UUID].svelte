@@ -3,7 +3,16 @@
 	import { DialogEmail, DialogPhone, DialogConfirm } from '../../components/dialogs';
 	import Card, { Content, Actions } from '@smui/card';
 	import Button, { Label } from '@smui/button';
-	import { FormatName, crumbs, baseUrl, buildHeaders, session, flash, clone } from '../../lib';
+	import {
+		FormatName,
+		crumbs,
+		baseUrl,
+		buildHeaders,
+		session,
+		flash,
+		clone,
+		progress
+	} from '../../lib';
 	export /**
 	 * @type {{ Emails: any; Phones: any; UUID: any; Name: { First: any; Middle: any; Last: any; }; }}
 	 */
@@ -84,6 +93,7 @@
 	};
 	const addPhone = (/** @type {any} */ phone) => {
 		// unable to use async/await, not sure why
+		progress.set(true);
 		const headers = buildHeaders(currentUser);
 		const url = `${baseUrl}/user/${user.UUID}/phone`;
 		try {
@@ -98,6 +108,7 @@
 		}
 	};
 	const addEmail = (/** @type {any} */ email) => {
+		progress.set(true);
 		const headers = buildHeaders(currentUser);
 		const url = `${baseUrl}/user/${user.UUID}/email`;
 		try {
@@ -112,6 +123,7 @@
 		}
 	};
 	let confirmAction = () => {
+		progress.set(true);
 		let idx, url;
 		const headers = buildHeaders(currentUser);
 		try {
@@ -141,6 +153,7 @@
 		}
 	};
 	const updatePhone = (/** @type {any} */ phone) => {
+		progress.set(true);
 		const { UUID } = phone;
 		const url = `${baseUrl}/phone/${UUID}`;
 		const headers = buildHeaders(currentUser);
@@ -156,6 +169,7 @@
 		}
 	};
 	const updateEmail = (/** @type {any} */ email) => {
+		progress.set(true);
 		const { UUID } = email;
 		const url = `${baseUrl}/email/${UUID}`;
 		const headers = buildHeaders(currentUser);
@@ -171,6 +185,7 @@
 		}
 	};
 	const updateUser = async () => {
+		progress.set(true); // navigation will close
 		// @ts-ignore
 		delete user.Emails;
 		// @ts-ignore
@@ -195,6 +210,7 @@
 				.then((results) => results.json())
 				.then((saved) => {
 					user = saved;
+					progress.set(false);
 				});
 		} catch (error) {
 			console.log(error);

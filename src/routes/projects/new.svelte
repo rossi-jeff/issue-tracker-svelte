@@ -2,13 +2,14 @@
 	import { FormProject } from '../../components/forms';
 	import Card, { Content, Actions } from '@smui/card';
 	import Button, { Label } from '@smui/button';
-	import { crumbs, baseUrl, buildHeaders, session, flash } from '../../lib';
+	import { crumbs, baseUrl, buildHeaders, session, flash, progress } from '../../lib';
 	let project = {
 		Name: '',
 		Details: ''
 	};
 
 	const saveProject = async () => {
+		progress.set(true); // navigation will close
 		const url = `${baseUrl}/project`;
 		const headers = buildHeaders(currentUser);
 		const results = await fetch(url, {

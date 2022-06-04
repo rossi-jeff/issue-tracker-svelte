@@ -25,3 +25,5 @@ export const session = writable(initialStores.session);
 export const flash = writable(initialStores.flash);
 
 export const crumbs = writable(trail);
+
+export const progress = writable(false);

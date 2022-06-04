@@ -1,5 +1,5 @@
 <script>
-	import { session, sessionKey, crumbs } from '../lib';
+	import { session, sessionKey, crumbs, progress } from '../lib';
 	import { onMount } from 'svelte';
 	/**
 	 * @type {{ signedIn: any; Name?: string; UserName?: string; Token?: string; UUID?: string; SessionId?: string; }}
@@ -19,6 +19,7 @@
 				session.set(JSON.parse(stored));
 			}
 		}
+		progress.set(false);
 	});
 </script>
 

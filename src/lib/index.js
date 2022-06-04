@@ -13,4 +13,4 @@ export {
 	PhoneTypeArray,
 	RoleArray
 } from './options';
-export { initialStores, sessionKey, session, flash, crumbs } from './stores';
+export { initialStores, sessionKey, session, flash, crumbs, progress } from './stores';

@@ -1,6 +1,6 @@
 <script>
 	import { onMount } from 'svelte';
-	import { baseUrl, crumbs } from '../lib';
+	import { baseUrl, crumbs, progress } from '../lib';
 	import { CardUser } from '../components/cards';
 	import IconButton, { Icon } from '@smui/icon-button';
 	import LayoutGrid, { Cell } from '@smui/layout-grid';
@@ -76,6 +76,7 @@
 	};
 
 	const loadUsers = async () => {
+		progress.set(true);
 		let url = `${baseUrl}/user`;
 		const results = await fetch(url);
 		if (results.ok) {
@@ -85,6 +86,7 @@
 			let ending = Math.min(users.length, beginning + perPage);
 			slice = users.slice(beginning, ending);
 			pageLabel = `${beginning + 1} to ${ending} of ${users.length}`;
+			progress.set(false);
 		}
 	};
 

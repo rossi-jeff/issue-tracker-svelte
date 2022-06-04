@@ -1,6 +1,6 @@
 <script>
 	import { onMount } from 'svelte';
-	import { baseUrl, crumbs } from '../lib';
+	import { baseUrl, crumbs, progress } from '../lib';
 	import { CardProject } from '../components/cards';
 	import IconButton, { Icon } from '@smui/icon-button';
 	import LayoutGrid, { Cell } from '@smui/layout-grid';
@@ -75,6 +75,7 @@
 	};
 
 	const loadProjects = async () => {
+		progress.set(true);
 		let url = `${baseUrl}/project`;
 		const results = await fetch(url);
 		if (results.ok) {
@@ -84,6 +85,7 @@
 			let ending = Math.min(projects.length, beginning + perPage);
 			slice = projects.slice(beginning, ending);
 			pageLabel = `${beginning + 1} to ${ending} of ${projects.length}`;
+			progress.set(false);
 		}
 	};
 

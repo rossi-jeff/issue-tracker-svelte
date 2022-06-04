@@ -1,9 +1,17 @@
 <script>
-	import { TopBar, NavDrawer, BreadCrumbs, SnackBar } from '../components/layout';
+	import { TopBar, NavDrawer, BreadCrumbs, SnackBar, Progress } from '../components/layout';
 	import { AutoAdjust } from '@smui/top-app-bar';
 	import { Scrim, AppContent } from '@smui/drawer';
 	import { DialogLogin } from '../components/dialogs';
-	import { baseUrl, buildHeaders, session, sessionKey, initialStores, flash } from '../lib';
+	import {
+		baseUrl,
+		buildHeaders,
+		session,
+		sessionKey,
+		initialStores,
+		flash,
+		progress
+	} from '../lib';
 
 	/**
 	 * @type {import("@smui/top-app-bar/src/TopAppBar.svelte").default}
@@ -54,14 +62,19 @@
 	const dialogClosed = () => {
 		open.login = false;
 	};
+	const navigate = () => {
+		open.panel = false;
+		progress.set(true);
+	};
 </script>
 
 <TopBar {topAppBar} {toggleMenu} {signIn} {signOut} />
 <AutoAdjust {topAppBar}>
-	<NavDrawer open={open.panel} {toggleMenu} />
+	<NavDrawer open={open.panel} {navigate} />
 	<Scrim fixed={false} />
 	<AppContent style="padding: 4em 1em 1em 1em">
 		<BreadCrumbs />
+		<Progress />
 		<slot />
 	</AppContent>
 </AutoAdjust>

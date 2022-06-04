@@ -1,7 +1,16 @@
 <script>
 	import { FormUser } from '../../components/forms';
 	import { v4 } from 'uuid';
-	import { clone, crumbs, baseUrl, buildHeaders, session, flash, FormatName } from '../../lib';
+	import {
+		clone,
+		crumbs,
+		baseUrl,
+		buildHeaders,
+		session,
+		flash,
+		FormatName,
+		progress
+	} from '../../lib';
 	import { DialogEmail, DialogPhone, DialogConfirm } from '../../components/dialogs';
 	import Card, { Content, Actions } from '@smui/card';
 	import Button, { Label } from '@smui/button';
@@ -155,6 +164,7 @@
 		}
 	};
 	const saveUser = async () => {
+		progress.set(true); // navigation will close
 		const { Emails, Phones } = user;
 		// @ts-ignore
 		delete user.Emails;

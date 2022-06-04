@@ -2,7 +2,7 @@
 	import { FormIssue } from '../../components/forms';
 	import Card, { Content, Actions } from '@smui/card';
 	import Button, { Label } from '@smui/button';
-	import { crumbs, baseUrl, buildHeaders, session, flash } from '../../lib';
+	import { crumbs, baseUrl, buildHeaders, session, flash, progress } from '../../lib';
 	let issue = {
 		Title: '',
 		Details: '',
@@ -30,6 +30,7 @@
 	});
 
 	const saveIssue = async () => {
+		progress.set(true); // navigation will close
 		const url = `${baseUrl}/issue`;
 		const headers = buildHeaders(currentUser);
 		const results = await fetch(url, {

@@ -2,7 +2,7 @@
 	import { FormProject } from '../../components/forms';
 	import Card, { Content, Actions } from '@smui/card';
 	import Button, { Label } from '@smui/button';
-	import { crumbs, session, baseUrl, buildHeaders, flash } from '../../lib';
+	import { crumbs, session, baseUrl, buildHeaders, flash, progress } from '../../lib';
 	export /**
 	 * @type {{ Name: string; Details: string; UUID: string; }}
 	 */
@@ -24,6 +24,7 @@
 	});
 
 	const updateProject = async () => {
+		progress.set(true); // navigation will close
 		const url = `${baseUrl}/project/${project.UUID}`;
 		const headers = buildHeaders(currentUser);
 		const results = await fetch(url, {
