@@ -34,6 +34,9 @@
 		</Section>
 		<Section align="end" toolbar>
 			{#if currentUser.signedIn}
+				<IconButton class="material-icons" aria-label="Profile" title="Profile" href="/profile"
+					>manage_accounts</IconButton
+				>
 				<IconButton class="material-icons" aria-label="Sign Out" title="Sign Out" on:click={signOut}
 					>logout</IconButton
 				>

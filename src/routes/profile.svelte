@@ -1,46 +1,41 @@
 <script>
-	import { FormUser } from '../../components/forms';
-	import { DialogEmail, DialogPhone, DialogConfirm } from '../../components/dialogs';
+	import { FormUser } from '../components/forms';
+	import {
+		DialogEmail,
+		DialogPhone,
+		DialogConfirm,
+		DialogChangePassword
+	} from '../components/dialogs';
 	import Card, { Content, Actions } from '@smui/card';
 	import Button, { Label } from '@smui/button';
 	import {
-		FormatName,
 		crumbs,
-		baseUrl,
-		buildHeaders,
+		progress,
 		session,
+		baseUrl,
+		FormatName,
+		buildHeaders,
 		flash,
-		clone,
-		progress
-	} from '../../lib';
-	export /**
-	 * @type {{ Emails: any; Phones: any; UUID: any; Name: { First: any; Middle: any; Last: any; }; }}
+		clone
+	} from '../lib';
+	import { onMount } from 'svelte';
+	import FormField from '@smui/form-field';
+	import Checkbox from '@smui/checkbox';
+	import { TableTimeClock } from '../components/tables';
+
+	/** @type {{ text: string; href?: string; }[]} */
+	let trail = [{ text: 'Home', href: '/' }];
+
+	let enabled = false;
+
+	/**
+	 * @type {{ UUID: any; signedIn?: boolean; Name?: string; UserName?: string; Token?: string; SessionId?: string; }}
 	 */
-	let user;
-	let confirmation = {
-		title: '',
-		message: '',
-		entity: '',
-		data: ''
-	};
-	let open = {
-		email: false,
-		phone: false,
-		confirm: false
-	};
-	let editor = {
-		email: {
-			Address: '',
-			Usage: 'Personal',
-			Public: false
-		},
-		phone: {
-			Number: '',
-			Type: 'Cellular',
-			Usage: 'Personal',
-			Public: false
-		}
-	};
+	let currentUser;
+	session.subscribe((value) => {
+		currentUser = value;
+	});
+
 	const editEmail = (/** @type {any} */ UUID) => {
 		let found = user.Emails.find((/** @type {{ UUID: any; }} */ e) => e.UUID == UUID);
 		if (found) {
@@ -95,7 +90,7 @@
 		// unable to use async/await, not sure why
 		progress.set(true);
 		const headers = buildHeaders(currentUser);
-		const url = `${baseUrl}/user/${user.UUID}/phone`;
+		const url = `${baseUrl}/user/${currentUser.UUID}/phone`;
 		try {
 			fetch(url, { method: 'POST', body: JSON.stringify(phone), headers })
 				.then((results) => results.json())
@@ -110,7 +105,7 @@
 	const addEmail = (/** @type {any} */ email) => {
 		progress.set(true);
 		const headers = buildHeaders(currentUser);
-		const url = `${baseUrl}/user/${user.UUID}/email`;
+		const url = `${baseUrl}/user/${currentUser.UUID}/email`;
 		try {
 			fetch(url, { method: 'POST', body: JSON.stringify(email), headers })
 				.then((results) => results.json())
@@ -120,6 +115,24 @@
 				});
 		} catch (error) {
 			console.log(error);
+		}
+	};
+	const updateUser = async () => {
+		progress.set(true); // navigation will close
+		// @ts-ignore
+		delete user.Emails;
+		// @ts-ignore
+		delete user.Phones;
+		const headers = buildHeaders(currentUser);
+		let url = `${baseUrl}/user/${currentUser.UUID}`;
+		const response = await fetch(url, { method: 'PATCH', body: JSON.stringify(user), headers });
+		if (response.ok) {
+			const updated = await response.json();
+			flash.set({
+				visible: true,
+				message: `Updated: ${FormatName(updated.Name)}`
+			});
+			window.location.href = '/users';
 		}
 	};
 	let confirmAction = () => {
@@ -184,57 +197,107 @@
 			console.log(error);
 		}
 	};
-	const updateUser = async () => {
-		progress.set(true); // navigation will close
-		// @ts-ignore
-		delete user.Emails;
-		// @ts-ignore
-		delete user.Phones;
-		const headers = buildHeaders(currentUser);
-		let url = `${baseUrl}/user/${user.UUID}`;
-		const response = await fetch(url, { method: 'PATCH', body: JSON.stringify(user), headers });
-		if (response.ok) {
-			const updated = await response.json();
-			flash.set({
-				visible: true,
-				message: `Updated: ${FormatName(updated.Name)}`
-			});
-			window.location.href = '/users';
+
+	let confirmation = {
+		title: '',
+		message: '',
+		entity: '',
+		data: ''
+	};
+	let open = {
+		email: false,
+		phone: false,
+		confirm: false,
+		password: false
+	};
+	let editor = {
+		email: {
+			Address: '',
+			Usage: 'Personal',
+			Public: false
+		},
+		phone: {
+			Number: '',
+			Type: 'Cellular',
+			Usage: 'Personal',
+			Public: false
+		}
+	};
+
+	/**
+	 * @type {any}
+	 */
+	let user = {
+		Credentials: {
+			Username: '',
+			Password: ''
+		},
+		Name: {
+			First: '',
+			Middle: '',
+			Last: ''
+		},
+		Emails: [],
+		Phones: [],
+		Roles: []
+	};
+	/**
+	 * @type {any[]}
+	 */
+	let timeclocks = [];
+
+	let changePassWord = (/** @type {any} */ params) => {
+		console.log('changePassWord', params);
+		try {
+			const url = `${baseUrl}/user/${currentUser.UUID}/password`;
+			const headers = buildHeaders(currentUser);
+			fetch(url, { method: 'POST', body: JSON.stringify(params), headers }).then(() =>
+				flash.set({ visible: true, message: 'PassWord Changed' })
+			);
+		} catch (error) {
+			flash.set({ visible: true, message: 'Error: Unauthorized' });
 		}
 	};
 
 	const reloadUser = () => {
-		const url = `${baseUrl}/user/${user.UUID}`;
+		const url = `${baseUrl}/user/${currentUser.UUID}`;
 		try {
 			fetch(url)
 				.then((results) => results.json())
-				.then((saved) => {
-					user = saved;
-					progress.set(false);
+				.then((data) => {
+					user = data;
 				});
 		} catch (error) {
 			console.log(error);
 		}
 	};
 
-	/**
-	 * @type {{ Token?: any; signedIn?: any; }}
-	 */
-	let currentUser;
-	session.subscribe((value) => {
-		currentUser = value;
+	onMount(async () => {
+		if (currentUser.SessionId) {
+			let url, results;
+			progress.set(true);
+			url = `${baseUrl}/user/${currentUser.UUID}`;
+			results = await fetch(url);
+			if (results.ok) {
+				user = await results.json();
+			}
+			url = `${baseUrl}/user/${currentUser.UUID}/timeclock`;
+			results = await fetch(url);
+			if (results.ok) {
+				timeclocks = await results.json();
+			}
+			trail.push({ text: `Profile: ${FormatName(user.Name)}` });
+			crumbs.set(trail);
+			progress.set(false);
+		}
 	});
-
-	let trail = [
-		{ text: 'Home', href: '/' },
-		{ text: 'Users', href: '/users' },
-		{ text: FormatName(user.Name) }
-	];
-	crumbs.set(trail);
 </script>
 
-<Card>
+<Card style="margin-bottom: 0.5em">
 	<Content>
+		<Button on:click={() => (open.password = true)} style="margin-bottom: 0.5em">
+			<Label>Change Password</Label>
+		</Button>
 		<FormUser
 			{user}
 			{editEmail}
@@ -244,16 +307,24 @@
 			{addPhone}
 			{addEmail}
 			showPass={false}
-			enabled={currentUser.signedIn}
+			{enabled}
 		/>
+		<FormField>
+			<Checkbox bind:checked={enabled} disabled={!currentUser.signedIn} />
+			<span slot="label">Enable Form Editing</span>
+		</FormField>
 	</Content>
 	<Actions fullBleed>
-		<Button on:click={updateUser} disabled={!currentUser.signedIn}>
+		<Button on:click={updateUser} disabled={!enabled}>
 			<Label>Update User</Label>
 			<i class="material-icons" aria-hidden="true">save</i>
 		</Button>
 	</Actions>
 </Card>
+
+{#if timeclocks.length}
+	<TableTimeClock {timeclocks} {enabled} />
+{/if}
 
 <div class="scroll-space" />
 
@@ -265,3 +336,4 @@
 />
 <DialogPhone phone={editor.phone} open={open.phone} {updatePhone} />
 <DialogEmail email={editor.email} open={open.email} {updateEmail} />
+<DialogChangePassword open={open.password} {changePassWord} />

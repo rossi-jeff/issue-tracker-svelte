@@ -1,6 +1,6 @@
 <script>
 	import { onMount } from 'svelte';
-	import { baseUrl, crumbs, progress } from '../lib';
+	import { baseUrl, crumbs, progress, session } from '../lib';
 	import { TableTimeClock } from '../components/tables';
 	import IconButton, { Icon } from '@smui/icon-button';
 	import { FilterTimeClock } from '../components/filters';
@@ -11,20 +11,41 @@
 	 */
 	let timeclocks = [];
 	let filterAction = (/** @type {any} */ params) => {
-		console.log('filterAction', params);
+		progress.set(true);
+		const url = new URL(`${baseUrl}/timeclock`);
+		for (const key in params) {
+			if (params[key]) {
+				url.searchParams.append(key, params[key]);
+			}
+		}
+		fetch(url.toString())
+			.then((results) => results.json())
+			.then((data) => {
+				timeclocks = data;
+				progress.set(false);
+			});
 	};
 
 	let trail = [{ text: 'Home', href: '/' }, { text: 'Time Clocks' }];
 	crumbs.set(trail);
 
-	onMount(async () => {
+	/**
+	 * @type {{ signedIn: any; Name?: string; UserName?: string; Token?: string; UUID?: string; SessionId?: string; }}
+	 */
+	let currentUser;
+	session.subscribe((value) => {
+		currentUser = value;
+	});
+
+	onMount(() => {
 		progress.set(true);
 		let url = `${baseUrl}/timeclock`;
-		const results = await fetch(url);
-		if (results.ok) {
-			timeclocks = await results.json();
-			progress.set(false);
-		}
+		fetch(url)
+			.then((results) => results.json())
+			.then((data) => {
+				timeclocks = data;
+				progress.set(false);
+			});
 	});
 </script>
 
@@ -42,4 +63,6 @@
 	</Content>
 </Card>
 
-<TableTimeClock {timeclocks} />
+<TableTimeClock {timeclocks} enabled={currentUser.signedIn} />
+
+<div class="scroll-space" />

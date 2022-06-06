@@ -28,14 +28,29 @@
 		EndDate: ''
 	};
 	let filter = clone(blank);
+	/**
+	 * @type {NodeJS.Timeout | null | undefined}
+	 */
+	let timeout = null;
 
-	const filtersChanged = () => {
-		filterAction(clone(filter));
+	const filtersChanged = (/** @type {any} */ e) => {
+		if (
+			(e.type == 'click' && e.target && e.target.dataset && e.target.dataset.value != undefined) ||
+			(e.type == 'blur' && e.detail && e.detail.target && e.detail.target.value)
+		) {
+			if (timeout) clearTimeout(timeout);
+			timeout = setTimeout(async () => {
+				filterAction(clone(filter));
+			}, 100);
+		}
 	};
 
 	const clearFilters = () => {
-		filter = clone(blank);
-		filterAction(clone(filter));
+		if (timeout) clearTimeout(timeout);
+		timeout = setTimeout(() => {
+			filter = clone(blank);
+			filterAction(clone(filter));
+		}, 100);
 	};
 
 	export let filterAction = (/** @type {any} */ params) => {};

@@ -18,7 +18,7 @@
 	 */
 	let issues = [];
 	export /**
-	 * @type {{ Issue?: { Id: any; }; IssueId: number; Project?: { Id: any; }; ProjectId: any; User?: { Id: any; }; UserId: any; Start: { Date: string | number | null | undefined; Time: string | number | null | undefined; }; End: { Date: string | number | null | undefined; Time: string | number | null | undefined; }; }}
+	 * @type {{ Issue?: { Id: any; }; IssueId?: number; Project?: { Id: any; }; ProjectId?: any; User?: { Id: any; }; UserId?: any; Start?: { Date?: string; Time?: string; }; End?: { Date?: string; Time?: string; }; }}
 	 */
 	let timeclock;
 	onMount(async () => {

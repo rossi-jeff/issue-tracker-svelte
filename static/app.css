@@ -24,3 +24,16 @@ strong.crumb-spacer {
 .scroll-space {
 	height: 20em;
 }
+.auto-300 {
+	max-height: 300px;
+	overflow-y: auto;
+}
+.dashboard-header {
+	background-color: #EEE;
+	cursor: pointer;
+	margin: 0 0 0.5em 0;
+	padding: 0.25em 0.5em 0.25em 0.5em;
+}
+.dashboard-header:hover {
+	background-color: #CCC;
+}

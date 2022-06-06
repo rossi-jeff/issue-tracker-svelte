@@ -34,6 +34,10 @@
 		Usage: 'Personal',
 		Public: false
 	};
+	export /**
+	 * @type {any}
+	 */
+	let enabled;
 	const newPhone = () => {
 		const { Number, Type, Usage, Public } = phone;
 		addPhone({ Number, Type, Usage, Public });
@@ -57,6 +61,7 @@
 						helperLine$style="width: 100%;"
 						bind:value={user.Credentials.Username}
 						label="Username"
+						disabled={!enabled}
 					>
 						<HelperText slot="helper">helper text</HelperText>
 					</Textfield>
@@ -69,6 +74,7 @@
 							bind:value={user.Credentials.Password}
 							label="Password"
 							type="password"
+							disabled={!enabled}
 						>
 							<HelperText slot="helper">helper text</HelperText>
 						</Textfield>
@@ -87,6 +93,7 @@
 						helperLine$style="width: 100%;"
 						bind:value={user.Name.First}
 						label="First"
+						disabled={!enabled}
 					>
 						<HelperText slot="helper">helper text</HelperText>
 					</Textfield>
@@ -97,6 +104,7 @@
 						helperLine$style="width: 100%;"
 						bind:value={user.Name.Middle}
 						label="Middle"
+						disabled={!enabled}
 					>
 						<HelperText slot="helper">helper text</HelperText>
 					</Textfield>
@@ -107,6 +115,7 @@
 						helperLine$style="width: 100%;"
 						bind:value={user.Name.Last}
 						label="Last"
+						disabled={!enabled}
 					>
 						<HelperText slot="helper">helper text</HelperText>
 					</Textfield>
@@ -128,7 +137,7 @@
 					<div>Usage</div>
 					{#each UsageArray as usage}
 						<FormField>
-							<Radio value={usage} bind:group={email.Usage} />
+							<Radio value={usage} bind:group={email.Usage} disabled={!enabled} />
 							<span slot="label">{usage}</span>
 						</FormField>
 					{/each}
@@ -137,20 +146,20 @@
 					<div>Public</div>
 					{#each [true, false] as pub}
 						<FormField>
-							<Radio value={pub} bind:group={email.Public} />
+							<Radio value={pub} bind:group={email.Public} disabled={!enabled} />
 							<span slot="label">{pub ? 'Yes' : 'No'}</span>
 						</FormField>
 					{/each}
 				</Cell>
 				<Cell span={3}>
-					<Button on:click={newEmail}>
+					<Button on:click={newEmail} disabled={!enabled}>
 						<Label style="margin-right: 0.5em">Add Email</Label>
 						<i class="material-icons" aria-hidden="true">save</i>
 					</Button>
 				</Cell>
 			</LayoutGrid>
 			{#if user.Emails.length}
-				<TableEmail emails={user.Emails} {editEmail} {deleteEmail} />
+				<TableEmail emails={user.Emails} {editEmail} {deleteEmail} {enabled} />
 			{/if}
 		</Content>
 	</Panel>
@@ -160,7 +169,7 @@
 			<LayoutGrid>
 				<Cell span={3}>
 					<div>Number</div>
-					<Textfield bind:value={phone.Number} style="width:100%">
+					<Textfield bind:value={phone.Number} style="width:100%" disabled={!enabled}>
 						<HelperText slot="helper">helper text</HelperText>
 					</Textfield>
 				</Cell>
@@ -168,7 +177,7 @@
 					<div>Type</div>
 					{#each PhoneTypeArray as type}
 						<FormField>
-							<Radio value={type} bind:group={phone.Type} />
+							<Radio value={type} bind:group={phone.Type} disabled={!enabled} />
 							<span slot="label">{type}</span>
 						</FormField>
 					{/each}
@@ -177,7 +186,7 @@
 					<div>Usage</div>
 					{#each UsageArray as usage}
 						<FormField>
-							<Radio value={usage} bind:group={phone.Usage} />
+							<Radio value={usage} bind:group={phone.Usage} disabled={!enabled} />
 							<span slot="label">{usage}</span>
 						</FormField>
 					{/each}
@@ -186,20 +195,20 @@
 					<div>Public</div>
 					{#each [true, false] as pub}
 						<FormField>
-							<Radio value={pub} bind:group={phone.Public} />
+							<Radio value={pub} bind:group={phone.Public} disabled={!enabled} />
 							<span slot="label">{pub ? 'Yes' : 'No'}</span>
 						</FormField>
 					{/each}
 				</Cell>
 				<Cell span={2}>
-					<Button on:click={newPhone}>
+					<Button on:click={newPhone} disabled={!enabled}>
 						<Label style="margin-right: 0.5em">Add Phone</Label>
 						<i class="material-icons" aria-hidden="true">save</i>
 					</Button>
 				</Cell>
 			</LayoutGrid>
 			{#if user.Phones.length}
-				<TablePhone phones={user.Phones} {editPhone} {deletePhone} />
+				<TablePhone phones={user.Phones} {editPhone} {deletePhone} {enabled} />
 			{/if}
 		</Content>
 	</Panel>
@@ -210,7 +219,7 @@
 				{#each RoleArray as role}
 					<Cell span={2}>
 						<FormField>
-							<Checkbox value={role} bind:group={user.Roles} />
+							<Checkbox value={role} bind:group={user.Roles} disabled={!enabled} />
 							<span slot="label" style="cursor: pointer;">{role}</span>
 						</FormField>
 					</Cell>

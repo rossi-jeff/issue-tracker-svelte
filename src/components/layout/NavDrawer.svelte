@@ -8,7 +8,7 @@
 	export let navigate = () => {};
 </script>
 
-<Drawer variant="modal" fixed={false} bind:open style="z-index: 999999">
+<Drawer variant="modal" fixed={false} bind:open style="z-index: 9999999">
 	<Header>
 		<Title>Issue Tracker</Title>
 		<Subtitle>Built by Jeff Rossi</Subtitle>
@@ -18,6 +18,10 @@
 			<Item href="/" on:click={navigate}>
 				<Graphic class="material-icons" aria-hidden="true">home</Graphic>
 				<Text>Home</Text>
+			</Item>
+			<Item href="/dashboard" on:click={navigate}>
+				<Graphic class="material-icons" aria-hidden="true">dashboard</Graphic>
+				<Text>Dashboard</Text>
 			</Item>
 			<Item href="/projects" on:click={navigate}>
 				<Graphic class="material-icons" aria-hidden="true">construction</Graphic>

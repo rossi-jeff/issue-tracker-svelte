@@ -14,7 +14,7 @@
 	 */
 	let message;
 	export let confirmAction = () => {};
-	const closeHandler = (e) => {
+	const closeHandler = (/** @type {{ detail: { action: string; }; }} */ e) => {
 		if (e.detail.action === 'confirm') confirmAction();
 		open = false;
 	};

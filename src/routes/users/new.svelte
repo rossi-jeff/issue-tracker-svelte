@@ -215,7 +215,7 @@
 	};
 
 	/**
-	 * @type {{ Token?: any; } | undefined}
+	 * @type {{ Token?: any; signedIn?: any; }}
 	 */
 	let currentUser;
 	session.subscribe((value) => {
@@ -241,10 +241,11 @@
 			{addPhone}
 			{addEmail}
 			showPass={true}
+			enabled={currentUser.signedIn}
 		/>
 	</Content>
 	<Actions fullBleed>
-		<Button on:click={saveUser}>
+		<Button on:click={saveUser} disabled={!currentUser.signedIn}>
 			<Label>Save User</Label>
 			<i class="material-icons" aria-hidden="true">save</i>
 		</Button>

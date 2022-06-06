@@ -71,7 +71,7 @@
 <TopBar {topAppBar} {toggleMenu} {signIn} {signOut} />
 <AutoAdjust {topAppBar}>
 	<NavDrawer open={open.panel} {navigate} />
-	<Scrim fixed={false} />
+	<Scrim fixed={false} style="z-index: 999999" />
 	<AppContent style="padding: 4em 1em 1em 1em">
 		<BreadCrumbs />
 		<Progress />

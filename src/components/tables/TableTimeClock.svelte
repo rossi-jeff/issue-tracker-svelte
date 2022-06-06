@@ -8,6 +8,10 @@
 	 * @type {any[]}
 	 */
 	let timeclocks = [];
+	export /**
+	 * @type {any}
+	 */
+	let enabled;
 	export let deleteClock = (/** @type {any} */ UUID) => {};
 
 	let rowsPerPage = 10;
@@ -21,6 +25,10 @@
 	$: if (currentPage > lastPage) {
 		currentPage = lastPage;
 	}
+
+	let goTo = (/** @type {string} */ pathName) => {
+		window.location.href = pathName;
+	};
 </script>
 
 <DataTable style="width:100%">
@@ -42,7 +50,7 @@
 		{#each slice as clock (clock.Id)}
 			<Row>
 				<Cell style="width:2em">
-					<IconButton href="/timeclocks/{clock.UUID}">
+					<IconButton on:click={() => goTo(`/timeclocks/${clock.UUID}`)} disabled={!enabled}>
 						<Icon class="material-icons">edit</Icon>
 					</IconButton>
 				</Cell>
@@ -67,7 +75,7 @@
 				<Cell>{clock.End.Time}</Cell>
 				<Cell>{GetHours(clock)}</Cell>
 				<Cell style="width:2em">
-					<IconButton on:click={() => deleteClock(clock.UUID)}>
+					<IconButton on:click={() => deleteClock(clock.UUID)} disabled={!enabled}>
 						<Icon class="material-icons">close</Icon>
 					</IconButton>
 				</Cell>
