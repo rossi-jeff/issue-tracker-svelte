@@ -1,5 +1,5 @@
 <script>
-	import { crumbs, progress, baseUrl, clone, session } from '../lib';
+	import { crumbs, progress, baseUrl, clone, session, flash, buildHeaders } from '../lib';
 	import { onMount } from 'svelte';
 	import LayoutGrid, { Cell } from '@smui/layout-grid';
 	import { CardDashboard } from '../components/cards';
@@ -75,6 +75,40 @@
 		if (id && target) {
 			const draggable = document.getElementById(id)
 			target.appendChild(draggable)
+			let Status
+			switch (target.id) {
+				case 'drop-new':
+					Status = 'New';
+					break;
+				case 'drop-assigned':
+					Status = 'Assigned';
+					break;
+				case 'drop-accepted':
+					Status = 'Accepted';
+					break;
+				case 'drop-fixed':
+					Status = 'Fixed';
+					break;
+				case 'drop-other':
+					Status = '';
+					break;
+				default:
+					break;
+			}
+			if (Status != undefined) {
+				const headers = buildHeaders(currentUser)
+				const url = `${baseUrl}/issue/${id}`;
+				fetch(url, {
+					method: 'PATCH',
+					body: JSON.stringify({ Status }),
+					headers
+				})
+					.then(response => response.json())
+					.then(saved => {
+						flash.set({ visible: true, message: `Updated Issue: ${saved.SequenceNumber}`})
+					})
+					.catch(e => console.log(e))
+			}
 		}
 		console.log(`Dropped: ${id} in ${target.id}`);
 	};

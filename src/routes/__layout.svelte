@@ -12,6 +12,7 @@
 		flash,
 		progress
 	} from '../lib';
+	import { page } from '$app/stores';
 
 	/**
 	 * @type {import("@smui/top-app-bar/src/TopAppBar.svelte").default}
@@ -34,6 +35,9 @@
 			visible: true,
 			message: 'Sign Out Successful'
 		});
+		if ($page.url.pathname != '/') {
+			window.location.href = '/'
+		}
 	};
 	let sendLogin = async (/** @type {{ Username: any; Password: any; }} */ payload) => {
 		open.login = false;
