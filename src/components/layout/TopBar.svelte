@@ -29,7 +29,9 @@
 <TopAppBar bind:this={topAppBar} variant="fixed" style="z-index: 99999">
 	<Row>
 		<Section>
-			<IconButton class="material-icons" on:click={toggleMenu} title="Menu" aria-label="Menu">menu</IconButton>
+			<IconButton class="material-icons" on:click={toggleMenu} title="Menu" aria-label="Menu"
+				>menu</IconButton
+			>
 			<Title>
 				<a href="/" style="color: white; text-decoration: none;">Issue Tracker</a>
 			</Title>
