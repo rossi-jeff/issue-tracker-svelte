@@ -2,7 +2,7 @@
 	import Card, { Content as CardContent } from '@smui/card';
 	import Accordion, { Panel, Header, Content } from '@smui-extra/accordion';
 	import { FormatName } from '../../lib';
-  import { onMount } from 'svelte'
+	import { onMount } from 'svelte';
 	export /**
 	 * @type {{ UUID: string | null | undefined; SequenceNumber: any; Title: any; Details: any; Project: { Name: any; }; Priority: any; Status: any; Type: any; Complexity: any; Created: any; Author: { Name: { First: any; Middle: any; Last: any; }; }; AssignedTo: { Name: { First: any; Middle: any; Last: any; }; }; }}
 	 */
@@ -13,15 +13,15 @@
 	let draggable;
 	let visible = false;
 
-  export let enableDrag = (/** @type {any} */ UUID) => {}
+	export let enableDrag = (/** @type {any} */ UUID) => {};
 
 	const toggleVisible = () => {
 		visible = !visible;
 	};
 
-  onMount(() => {
-    if (draggable) enableDrag(issue.UUID);
-  });
+	onMount(() => {
+		if (draggable) enableDrag(issue.UUID);
+	});
 </script>
 
 <Card

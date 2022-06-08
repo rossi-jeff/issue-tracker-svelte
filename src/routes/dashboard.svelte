@@ -41,12 +41,13 @@
 	};
 
 	const enableDrag = (/** @type {any} */ UUID) => {
-		const draggable = document.getElementById(UUID)
+		const draggable = document.getElementById(UUID);
 		if (draggable) {
-			draggable.addEventListener('dragstart', dragStart)
-			draggable.addEventListener('drag', dragging)
+			draggable.addEventListener('dragstart', dragStart);
+			draggable.addEventListener('drag', dragging);
+			draggable.classList.add('draggable');
 		}
-	}
+	};
 
 	const dragOver = (/** @type {any} */ e) => {
 		e.preventDefault();
@@ -67,15 +68,16 @@
 		e.target.classList.remove('drag-over');
 
 		const id = e.dataTransfer.getData('text/plain');
-		let parent, target = e.target;
+		let parent,
+			target = e.target;
 		while (target.classList && !target.classList.contains('drop-target')) {
 			parent = target.parentNode;
-			if (parent) target = parent
+			if (parent) target = parent;
 		}
 		if (id && target) {
-			const draggable = document.getElementById(id)
-			target.appendChild(draggable)
-			let Status
+			const draggable = document.getElementById(id);
+			target.appendChild(draggable);
+			let Status;
 			switch (target.id) {
 				case 'drop-new':
 					Status = 'New';
@@ -96,18 +98,18 @@
 					break;
 			}
 			if (Status != undefined) {
-				const headers = buildHeaders(currentUser)
+				const headers = buildHeaders(currentUser);
 				const url = `${baseUrl}/issue/${id}`;
 				fetch(url, {
 					method: 'PATCH',
 					body: JSON.stringify({ Status }),
 					headers
 				})
-					.then(response => response.json())
-					.then(saved => {
-						flash.set({ visible: true, message: `Updated Issue: ${saved.SequenceNumber}`})
+					.then((response) => response.json())
+					.then((saved) => {
+						flash.set({ visible: true, message: `Updated Issue: ${saved.SequenceNumber}` });
 					})
-					.catch(e => console.log(e))
+					.catch((e) => console.log(e));
 			}
 		}
 		console.log(`Dropped: ${id} in ${target.id}`);
@@ -193,7 +195,13 @@
 	<h4>Other</h4>
 	<div class="auto-300 drop-target" id="drop-other">
 		{#each sorted.other as issue (issue.Id)}
-			<CardDashboard {issue} draggable={false} enableDrag={() => {return false}} />
+			<CardDashboard
+				{issue}
+				draggable={false}
+				enableDrag={() => {
+					return false;
+				}}
+			/>
 		{/each}
 	</div>
 </div>

@@ -37,3 +37,15 @@ strong.crumb-spacer {
 .dashboard-header:hover {
 	background-color: #ddd;
 }
+.tab-detail {
+	padding: 1em;
+}
+.tab-detail-hidden {
+	display: none;
+}
+.selected-tab-detail {
+	display: block;
+}
+.draggable {
+	cursor: move;
+}

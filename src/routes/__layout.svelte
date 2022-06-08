@@ -36,7 +36,7 @@
 			message: 'Sign Out Successful'
 		});
 		if ($page.url.pathname != '/') {
-			window.location.href = '/'
+			window.location.href = '/';
 		}
 	};
 	let sendLogin = async (/** @type {{ Username: any; Password: any; }} */ payload) => {
