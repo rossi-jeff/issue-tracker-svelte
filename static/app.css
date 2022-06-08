@@ -28,8 +28,12 @@ strong.crumb-spacer {
 	max-height: 300px;
 	overflow-y: auto;
 }
+.auto-500 {
+	max-height: 500px;
+	overflow-y: auto;
+}
 .dashboard-header {
-	background-color: #eee;
+	background-color: white;
 	cursor: pointer;
 	margin: 0 0 0.5em 0;
 	padding: 0.25em 0.5em 0.25em 0.5em;

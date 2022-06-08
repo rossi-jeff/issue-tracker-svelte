@@ -13,7 +13,7 @@
 		"prepare": "svelte-kit sync && npm run smui-theme-light && npm run smui-theme-dark",
 		"smui-theme-light": "smui-theme compile static/smui.css -i src/theme",
 		"smui-theme-dark": "smui-theme compile static/smui-dark.css -i src/theme/dark",
-		"start": "node build/index"
+		"start": "node build/index.js"
 	},
 	"devDependencies": {
 		"@smui-extra/accordion": "^6.0.0-beta.16",
@@ -38,6 +38,7 @@
 		"@smui/top-app-bar": "^6.0.0-beta.16",
 		"@sveltejs/adapter-auto": "next",
 		"@sveltejs/adapter-node": "^1.0.0-next.78",
+		"@sveltejs/adapter-static": "^1.0.0-next.34",
 		"@sveltejs/kit": "next",
 		"eslint": "^8.12.0",
 		"eslint-config-prettier": "^8.3.0",

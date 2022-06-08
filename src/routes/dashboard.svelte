@@ -159,7 +159,7 @@
 <LayoutGrid>
 	<Cell span={3}>
 		<h4>New</h4>
-		<div class="auto-300 drop-target" id="drop-new">
+		<div class="auto-500 drop-target" id="drop-new">
 			{#each sorted.new as issue (issue.Id)}
 				<CardDashboard {issue} draggable={currentUser.signedIn} {enableDrag} />
 			{/each}
@@ -167,7 +167,7 @@
 	</Cell>
 	<Cell span={3}>
 		<h4>Assigned</h4>
-		<div class="auto-300 drop-target" id="drop-assigned">
+		<div class="auto-500 drop-target" id="drop-assigned">
 			{#each sorted.assigned as issue (issue.Id)}
 				<CardDashboard {issue} draggable={currentUser.signedIn} {enableDrag} />
 			{/each}
@@ -175,7 +175,7 @@
 	</Cell>
 	<Cell span={3}>
 		<h4>Accepted</h4>
-		<div class="auto-300 drop-target" id="drop-accepted">
+		<div class="auto-500 drop-target" id="drop-accepted">
 			{#each sorted.accepted as issue (issue.Id)}
 				<CardDashboard {issue} draggable={currentUser.signedIn} {enableDrag} />
 			{/each}
@@ -183,7 +183,7 @@
 	</Cell>
 	<Cell span={3}>
 		<h4>Fixed</h4>
-		<div class="auto-300 drop-target" id="drop-fixed">
+		<div class="auto-500 drop-target" id="drop-fixed">
 			{#each sorted.fixed as issue (issue.Id)}
 				<CardDashboard {issue} draggable={currentUser.signedIn} {enableDrag} />
 			{/each}
